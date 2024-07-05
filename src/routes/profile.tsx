@@ -5,6 +5,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import Tweet from "../components/tweet";
+import { ITweet } from "../components/timeline";
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,6 +63,11 @@ export default function Profile() {
     }
   };
   const fetchTweets = async () => {
+    // collection에서 여러 document 가져오기
+    // collection의 doucment를 쿼리하여 한 번의 요청으로 여러 document를 검색할 수도 있습니다.
+    // 예를 들어, where()를 사용하여 특정 조건을 충족하는 모든 문서를 쿼리한 다음 get()을 사용하여 결과를 검색할 수 있습니다.
+    // ex: const q = query(collection(db, "cities"), where("capital", "==", true));
+    // https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
     const tweetQuery = query(
       collection(db, "tweets"),
       where("userId", "==", user?.uid),
