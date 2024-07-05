@@ -138,7 +138,6 @@ const DeleteFile = styled.div`
 export default function Tweet({ username, photo, tweet, userId, id }: ITweet) {
   const [edit, setEdit] = useState(false);
   const [editedTweet, setEditedTweet] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [disable, setDisable] = useState(false);
   const user = auth.currentUser;
   const photoRef = ref(storage, `tweets/${user?.uid}/${id}`);
@@ -189,7 +188,6 @@ export default function Tweet({ username, photo, tweet, userId, id }: ITweet) {
     const { files } = e.target;
     //max file size is 1MB
     if (files && files.length === 1 && files[0].size < maxFileSizeInKB) {
-      setFile(files[0]);
       try {
         if (user && photo) {
           const result = await uploadBytes(photoRef, files[0]);
